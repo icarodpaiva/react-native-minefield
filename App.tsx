@@ -3,13 +3,14 @@ import { View, Text, StyleSheet } from "react-native"
 
 import { Field } from "./src/components/Field"
 
-import { params } from "./src/params"
+import { gameConfigs } from "./src/gameConfigs"
 
 const App = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        Tamanho da grade: {params.getRowsAmount()} x {params.getColumnsAmount()}
+        Tamanho da grade: {gameConfigs.getRowsAmount()} x
+        {gameConfigs.getColumnsAmount()}
       </Text>
       <Field />
       <Field opened />

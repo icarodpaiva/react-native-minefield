@@ -5,22 +5,22 @@ import type { StyleProp, ViewStyle } from "react-native"
 import { Mine } from "../Mine"
 import { Flag } from "../Flag"
 
-import { params } from "../../params"
+import { gameConfigs } from "../../gameConfigs"
 
 interface FieldProps {
   opened?: boolean
   mined?: boolean
-  nearMines?: number
   exploded?: boolean
   flagged?: boolean
+  nearMines?: number
 }
 
 export const Field = ({
   mined = false,
   opened = false,
-  nearMines = 0,
   exploded = false,
-  flagged = false
+  flagged = false,
+  nearMines = 0
 }: FieldProps) => {
   const styleField: StyleProp<ViewStyle> = [styles.field]
 
@@ -77,9 +77,9 @@ export const Field = ({
 
 const styles = StyleSheet.create({
   field: {
-    width: params.blockSize,
-    height: params.blockSize,
-    borderWidth: params.borderSize
+    width: gameConfigs.blockSize,
+    height: gameConfigs.blockSize,
+    borderWidth: gameConfigs.borderSize
   },
   regular: {
     backgroundColor: "#999",
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: "bold",
-    fontSize: params.fontSize
+    fontSize: gameConfigs.fontSize
   },
   exploded: {
     borderColor: "red",
