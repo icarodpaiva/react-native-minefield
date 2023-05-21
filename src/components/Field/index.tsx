@@ -2,18 +2,25 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import type { StyleProp, ViewStyle } from "react-native"
 
+import { Mine } from "../Mine"
+import { Flag } from "../Flag"
+
 import { params } from "../../params"
 
 interface FieldProps {
   opened?: boolean
   mined?: boolean
   nearMines?: number
+  exploded?: boolean
+  flagged?: boolean
 }
 
 export const Field = ({
   mined = false,
   opened = false,
-  nearMines = 0
+  nearMines = 0,
+  exploded = false,
+  flagged = false
 }: FieldProps) => {
   const styleField: StyleProp<ViewStyle> = [styles.field]
 
@@ -21,7 +28,15 @@ export const Field = ({
     styleField.push(styles.opened)
   }
 
-  if (styleField.length === 1) {
+  if (exploded) {
+    styleField.push(styles.exploded)
+  }
+
+  if (flagged) {
+    styleField.push(styles.flagged)
+  }
+
+  if (!opened && !exploded) {
     styleField.push(styles.regular)
   }
 
@@ -52,6 +67,10 @@ export const Field = ({
       {!mined && opened && nearMines > 0 && (
         <Text style={[styles.label, { color: getColor() }]}>{nearMines}</Text>
       )}
+
+      {mined && opened && <Mine />}
+
+      {flagged && !opened && <Flag />}
     </View>
   )
 }
@@ -78,5 +97,10 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: "bold",
     fontSize: params.fontSize
-  }
+  },
+  exploded: {
+    borderColor: "red",
+    backgroundColor: "red"
+  },
+  flagged: {}
 })

@@ -1,7 +1,7 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 
-import { Field } from "./src/components/Field/Field"
+import { Field } from "./src/components/Field"
 
 import { params } from "./src/params"
 
@@ -17,6 +17,11 @@ const App = () => {
       <Field opened nearMines={2} />
       <Field opened nearMines={3} />
       <Field opened nearMines={6} />
+      <Field mined />
+      <Field mined opened />
+      <Field mined opened exploded />
+      <Field flagged />
+      <Field flagged opened />
     </View>
   )
 }
