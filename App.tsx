@@ -1,28 +1,25 @@
-import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import React, { useState } from "react"
+import { View, StyleSheet } from "react-native"
 
-import { Field } from "./src/components/Field"
+import { MineField } from "./src/components/MineField"
 
 import { gameConfigs } from "./src/gameConfigs"
+import { createMinedBoard } from "./src/utils/createMinedBoard"
 
 const App = () => {
+  const [gameInfos, setGameInfos] = useState(() => {
+    const rows = gameConfigs.getRowsAmount()
+    const columns = gameConfigs.getColumnsAmount()
+    const minesAmount = Math.ceil(rows * columns * gameConfigs.difficultLevel)
+
+    return {
+      board: createMinedBoard(rows, columns, minesAmount)
+    }
+  })
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        Tamanho da grade: {gameConfigs.getRowsAmount()} x
-        {gameConfigs.getColumnsAmount()}
-      </Text>
-      <Field />
-      <Field opened />
-      <Field opened nearMines={1} />
-      <Field opened nearMines={2} />
-      <Field opened nearMines={3} />
-      <Field opened nearMines={6} />
-      <Field mined />
-      <Field mined opened />
-      <Field mined opened exploded />
-      <Field flagged />
-      <Field flagged opened />
+      <MineField board={gameInfos.board} />
     </View>
   )
 }
@@ -30,11 +27,12 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center"
   },
-  text: {
-    textAlign: "center"
+  board: {
+    alignItems: "center",
+    backgroundColor: "#AAA"
   }
 })
 

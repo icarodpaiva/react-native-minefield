@@ -8,13 +8,13 @@ export const gameConfigs = {
   difficultLevel: 0.1,
 
   getColumnsAmount() {
-    const width = Dimensions.get("window").width
+    const { width } = Dimensions.get("window")
     return Math.floor(width / this.blockSize)
   },
 
   getRowsAmount() {
-    const totalHeight = Dimensions.get("window").height
-    const boardHeight = totalHeight * (1 - this.headerRaio)
+    const { height } = Dimensions.get("window")
+    const boardHeight = height * (1 - this.headerRaio)
     return Math.floor(boardHeight / this.blockSize)
   }
 }
