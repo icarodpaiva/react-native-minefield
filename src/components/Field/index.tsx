@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native"
 import type { StyleProp, ViewStyle } from "react-native"
 
 import { Mine } from "../Mine"
@@ -8,6 +8,8 @@ import { Flag } from "../Flag"
 import { gameConfigs } from "../../gameConfigs"
 
 interface FieldProps {
+  onPress: () => void
+  onLongPress: () => void
   opened?: boolean
   mined?: boolean
   exploded?: boolean
@@ -16,6 +18,8 @@ interface FieldProps {
 }
 
 export const Field = ({
+  onPress,
+  onLongPress,
   mined = false,
   opened = false,
   exploded = false,
@@ -63,15 +67,17 @@ export const Field = ({
   }
 
   return (
-    <View style={styleField}>
-      {!mined && opened && nearMines > 0 && (
-        <Text style={[styles.label, { color: getColor() }]}>{nearMines}</Text>
-      )}
+    <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}>
+      <View style={styleField}>
+        {!mined && opened && nearMines > 0 && (
+          <Text style={[styles.label, { color: getColor() }]}>{nearMines}</Text>
+        )}
 
-      {mined && opened && <Mine />}
+        {mined && opened && <Mine />}
 
-      {flagged && !opened && <Flag />}
-    </View>
+        {flagged && !opened && <Flag />}
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
