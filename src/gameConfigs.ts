@@ -7,13 +7,11 @@ export const gameConfigs = {
   headerRaio: 0.15, // top panel
 
   getColumnsAmount() {
-    const { width } = Dimensions.get("window")
-    return Math.floor(width / this.blockSize)
+    return Math.floor(Dimensions.get("window").width / this.blockSize)
   },
 
   getRowsAmount() {
-    const { height } = Dimensions.get("window")
-    const boardHeight = height * (1 - this.headerRaio)
+    const boardHeight = Dimensions.get("window").height * (1 - this.headerRaio)
     return Math.floor(boardHeight / this.blockSize)
   }
 }
