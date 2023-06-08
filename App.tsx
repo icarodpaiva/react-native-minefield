@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from "react"
+import React, { useState } from "react"
 import { View, StyleSheet, Alert } from "react-native"
 
+import { LevelSelection } from "./src/screens/LevelSelection"
+import { Header } from "./src/components/Header"
 import { MineField } from "./src/components/MineField"
 
 import { gameConfigs } from "./src/gameConfigs"
@@ -14,22 +16,20 @@ import {
   flagField,
   flagsUsed
 } from "./src/utils"
-import { Header } from "./src/components/Header"
+
+const rows = gameConfigs.getRowsAmount()
+const columns = gameConfigs.getColumnsAmount()
+
+const createInitialState = (minesAmount: number = 0) => ({
+  board: createMinedBoard(rows, columns, minesAmount),
+  won: false,
+  lost: false
+})
 
 const App = () => {
-  const rows = useMemo(() => gameConfigs.getRowsAmount(), [])
-  const columns = useMemo(() => gameConfigs.getColumnsAmount(), [])
-
-  const minesAmount = useMemo(
-    () => Math.ceil(rows * columns * gameConfigs.difficultLevel),
-    [rows, columns]
-  )
-
-  const [gameInfos, setGameInfos] = useState({
-    board: createMinedBoard(rows, columns, minesAmount),
-    won: false,
-    lost: false
-  })
+  const [gameInfos, setGameInfos] = useState(createInitialState())
+  const [minesOnBoard, setMinesOnBoard] = useState(0)
+  const [showLevelSelection, setShowLevelSelection] = useState(true)
 
   const onPress = (row: number, column: number) => {
     const board = cloneBoard(gameInfos.board)
@@ -57,12 +57,26 @@ const App = () => {
     setGameInfos(prev => ({ ...prev, board }))
   }
 
+  const onLevelSelected = (difficultLevel: number) => {
+    const minesAmount = Math.ceil(rows * columns * difficultLevel)
+
+    setMinesOnBoard(minesAmount)
+    setGameInfos(createInitialState(minesAmount))
+
+    setShowLevelSelection(false)
+  }
+
   return (
     <View style={styles.container}>
+      <LevelSelection
+        isVisible={showLevelSelection}
+        onCancel={() => setShowLevelSelection(false)}
+        onLevelSelected={onLevelSelected}
+      />
       <Header
-        flagsLeft={minesAmount - flagsUsed(gameInfos.board)}
-        onFlagPress={() => {}}
-        onNewGame={() => {}}
+        flagsLeft={minesOnBoard - flagsUsed(gameInfos.board)}
+        onFlagPress={() => setShowLevelSelection(true)}
+        onNewGame={() => setShowLevelSelection(true)}
       />
       <MineField
         board={gameInfos.board}

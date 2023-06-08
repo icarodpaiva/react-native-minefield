@@ -5,7 +5,6 @@ export const gameConfigs = {
   borderSize: 5,
   fontSize: 15,
   headerRaio: 0.15, // top panel
-  difficultLevel: 0.1,
 
   getColumnsAmount() {
     const { width } = Dimensions.get("window")
