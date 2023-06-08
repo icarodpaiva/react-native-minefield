@@ -75,7 +75,6 @@ const App = () => {
       />
       <Header
         flagsLeft={minesOnBoard - flagsUsed(gameInfos.board)}
-        onFlagPress={() => setShowLevelSelection(true)}
         onNewGame={() => setShowLevelSelection(true)}
       />
       <MineField

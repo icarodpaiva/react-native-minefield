@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native"
+import { View, StyleSheet, Text, Pressable, Modal } from "react-native"
 
 interface LevelSelectionProps {
   isVisible: boolean
@@ -21,25 +21,28 @@ export const LevelSelection = ({
     >
       <View style={styles.frame}>
         <View style={styles.container}>
+          <Pressable style={styles.closeContainer} onPress={onCancel}>
+            <Text style={styles.closeLabel}>X</Text>
+          </Pressable>
           <Text style={styles.title}>Selecione o nível</Text>
-          <TouchableOpacity
+          <Pressable
             style={[styles.button, styles.bgEasy]}
             onPress={() => onLevelSelected(0.1)}
           >
             <Text style={styles.buttonLabel}>Fácil</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             style={[styles.button, styles.bgNormal]}
             onPress={() => onLevelSelected(0.2)}
           >
             <Text style={styles.buttonLabel}>Intermediário</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             style={[styles.button, styles.bgHard]}
             onPress={() => onLevelSelected(0.3)}
           >
             <Text style={styles.buttonLabel}>Difícil</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -54,10 +57,25 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.6)"
   },
   container: {
-    backgroundColor: "#eee",
+    position: "relative",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#eee",
     padding: 15
+  },
+  closeContainer: {
+    position: "absolute",
+    top: -40,
+    alignSelf: "flex-end",
+    alignItems: "center",
+    width: 40,
+    height: 40,
+    padding: 8,
+    backgroundColor: "#eee"
+  },
+  closeLabel: {
+    fontSize: 20,
+    fontWeight: "bold"
   },
   title: {
     fontSize: 30,
@@ -68,8 +86,8 @@ const styles = StyleSheet.create({
     padding: 5
   },
   buttonLabel: {
-    fontSize: 20,
     color: "#eee",
+    fontSize: 20,
     fontWeight: "bold"
   },
   bgEasy: {

@@ -1,25 +1,22 @@
 import React from "react"
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import { View, StyleSheet, Text, Pressable } from "react-native"
 import { Flag } from "../Flag"
 
 interface HeaderProps {
   flagsLeft: number
-  onFlagPress: () => void
   onNewGame: () => void
 }
 
-export const Header = ({ flagsLeft, onFlagPress, onNewGame }: HeaderProps) => {
+export const Header = ({ flagsLeft, onNewGame }: HeaderProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.flagContainer}>
-        <TouchableOpacity onPress={onFlagPress} style={styles.flagButton}>
-          <Flag isBigger />
-        </TouchableOpacity>
+      <View style={styles.flag}>
+        <Flag isBigger />
         <Text style={styles.flagLeft}>{flagsLeft}</Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={onNewGame}>
+      <Pressable style={styles.button} onPress={onNewGame}>
         <Text style={styles.buttonLabel}>Novo Jogo</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   )
 }
@@ -27,32 +24,27 @@ export const Header = ({ flagsLeft, onFlagPress, onNewGame }: HeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
     flexDirection: "row",
-    backgroundColor: "#EEE",
     alignItems: "center",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    width: "100%",
+    backgroundColor: "#EEE"
   },
-  flagContainer: {
+  flag: {
     flexDirection: "row"
   },
-  flagButton: {
-    marginTop: 10,
-    minWidth: 30
-  },
   flagLeft: {
+    marginLeft: 30,
     fontSize: 30,
-    fontWeight: "bold",
-    paddingTop: 5,
-    marginLeft: 20
+    fontWeight: "bold"
   },
   button: {
-    backgroundColor: "#999",
-    padding: 5
+    padding: 5,
+    backgroundColor: "#999"
   },
   buttonLabel: {
-    fontSize: 20,
     color: "#DDD",
+    fontSize: 20,
     fontWeight: "bold"
   }
 })
